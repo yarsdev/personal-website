@@ -7,10 +7,21 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select';
-import type { FunctionComponent } from 'react';
+import { useState, type FunctionComponent } from 'react';
 import { NavLink } from 'react-router';
 
-export const Header: FunctionComponent = () => {
+interface HeaderProps {
+   onLanguageChange: (value: string) => void;
+}
+
+export const Header: FunctionComponent<HeaderProps> = ({
+   onLanguageChange,
+}: HeaderProps) => {
+   const [language, setLanguage] = useState('en');
+   const changeLanguage = (language: string) => {
+      setLanguage(language);
+      onLanguageChange(language);
+   };
    return (
       <div className="fixed w-full flex justify-center top-0">
          <div className="shadow-lg flex text-lg items-center justify-center bg-white w-max py-4 px-8 rounded-2xl mt-4">
@@ -34,7 +45,7 @@ export const Header: FunctionComponent = () => {
                </div>
             </NavLink>
 
-            <Select value="en">
+            <Select onValueChange={changeLanguage} value={language}>
                <SelectTrigger className="text-lg">
                   <SelectValue
                      className="text-secondary"
@@ -48,7 +59,7 @@ export const Header: FunctionComponent = () => {
                   <SelectItem className="text-secondary" value="en">
                      English
                   </SelectItem>
-                  <SelectItem className="text-secondary" value="ge">
+                  <SelectItem className="text-secondary" value="de">
                      German
                   </SelectItem>
                </SelectContent>

@@ -1,15 +1,14 @@
+import { useTranslation } from 'react-i18next';
+
 export const Home = () => {
+   const { t } = useTranslation();
    return (
       <section>
          <div className="mt-40 container mx-auto flex rounded-2xl bg-white shadow-md">
             <div className="basis-1/4 p-9">
                <h1 className="text-7xl">Hello</h1>
                <h1 className="text-7xl font-bold">I'm Yar</h1>
-               <p className="mt-6">
-                  Designer with 12 years of experience in sketching, building
-                  and coaching. I love fun UI, collaboration and making helpful
-                  products that connect people.
-               </p>
+               <p className="mt-6">{t('intro')}</p>
             </div>
             <div className="basis-1/2 flex items-end">
                <img className="h-auto w-max" src="./photo.webp" alt="" />
