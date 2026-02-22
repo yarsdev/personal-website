@@ -1,19 +1,20 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import { Home } from './pages/Home';
-import { Header } from './components/ui/Header';
-import { Footer } from './components/ui/Footer';
-import { onLanguageChange } from './lib/i18n';
+import { WeddingPage } from './pages/Wedding';
+import MainLayout from './lib/layouts/MainLayout';
 
 function App() {
    return (
       <>
          <BrowserRouter>
-            <Header onLanguageChange={onLanguageChange} />
             <Routes>
-               <Route index element={<Home />} />
+               <Route path="/">
+                  <Route index element={<MainLayout />} />
+               </Route>
+               <Route path="features">
+                  <Route path="wedding" element={<WeddingPage />} />
+               </Route>
             </Routes>
-            <Footer />
          </BrowserRouter>
       </>
    );

@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+.wedding-page {
+   --pastel-green: #F7F3E8;
+   --text-color-section: #403a31;
+   --text-color: #342f26;
+   --card-bg-color: #FFFDF7;
+   --card-bg-border: #F7F3E8;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   background-color: #ffffff;
+   color: var(--text-color);
+   line-height: 1.6;
+}
+
+.w-header {
+   font-family: "Great Vibes", cursive;
+   background-color: var(--pastel-green);
+   padding: 3rem 1rem;
+   text-align: center;
+}
+
+.w-header h1 {
+   font-size: 6rem;
+   margin-bottom: 0.5rem;
+}
+
+.w-header p {
+   font-size: 3rem;
+}
+
+section {
+   max-width: 1000px;
+   margin: 3rem auto;
+   padding: 0 1rem;
+}
+
+section h2 {
+   font-size: 1.8rem;
+   margin-bottom: 1.5rem;
+   color: var(--text-color-section);
+   border-bottom: 2px solid var(--pastel-green);
+   display: inline-block;
+   font-family: "Fira Sans", sans-serif;
+   padding-bottom: 0.3rem;
+}
+
+.faq-card {
+   background-color: var(--card-bg-color);
+   border: 1px solid var(--card-bg-border);
+   border-radius: 10px;
+   padding-inline: 1.5rem;
+   margin-bottom: 1.5rem;
+   color: var(--text-color-section);
+}
+
+.card {
+   background-color: var(--card-bg-color);
+   border: 1px solid var(--card-bg-border);
+   border-radius: 10px;
+   padding: 1.5rem;
+   margin-bottom: 1.5rem;
+   color: var(--text-color-section);
+}
+
+.event-details p {
+   margin-bottom: 0.5rem;
+}
+
+.timeline {
+   position: relative;
+   margin-top: 2rem;
+   padding-left: 2rem;
+}
+
+.timeline::before {
+   content: '';
+   position: absolute;
+   left: 10px;
+   top: 0;
+   width: 4px;
+   height: 100%;
+   background-color: var(--pastel-green);
+   border-radius: 2px;
+}
+
+.timeline-item {
+   position: relative;
+   margin-bottom: 2rem;
+   padding: 1rem 1.5rem;
+   background-color: var(--card-bg-color);
+   border: 1px solid var(--pastel-green);
+   border-radius: 10px;
+   opacity: 0;
+   transform: translateY(30px);
+   transition: all 0.6s ease;
+}
+
+.timeline-item p {
+   color: var(--text-color-section);
+}
+
+.timeline-item::before {
+   content: '';
+   position: absolute;
+   left: -29px;
+   top: 1.2rem;
+   width: 16px;
+   height: 16px;
+   background-color: var(--card-bg-border);
+   border-radius: 50%;
+   border: 3px solid #fff;
+}
+
+.timeline-item.visible {
+   opacity: 1;
+   transform: translateY(0);
+}
+
+.fade-in {
+   opacity: 0;
+   transform: translateY(20px);
+   transition: all 0.8s ease;
+}
+
+.fade-in.visible {
+   opacity: 1;
+   transform: translateY(0);
+}
+
+.faq-item {
+   border-bottom: 1px solid var(--pastel-green);
+   padding: 0.5rem 0;
+}
+
+.faq-item:last-child {
+   border: none;
+}
+
+.faq-question {
+   width: 100%;
+   background: none;
+   border: none;
+   padding: 1rem 0;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   font-size: 1rem;
+   font-weight: 600;
+   color: var(--text-color-section);
+   cursor: pointer;
+   text-align: left;
+}
+
+.faq-icon {
+   color: var(--text-color-section);
+}
+
+.faq-icon {
+   font-size: 1.3rem;
+   transition: transform 0.3s ease;
+}
+
+.faq-answer {
+   max-height: 0;
+   overflow: hidden;
+   opacity: 0;
+   transition:
+      max-height 0.4s ease,
+      opacity 0.3s ease;
+}
+
+.faq-item.open .faq-answer {
+   max-height: 200px;
+   opacity: 1;
+}
+
+.faq-item.open .faq-icon {
+   transform: rotate(45deg);
+}
