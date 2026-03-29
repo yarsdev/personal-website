@@ -15,30 +15,46 @@
 }
 
 .w-header {
+   display: flex;
+   justify-content: center;
    position: relative;
    font-family: "Cursive";
-   padding: 3rem 1rem;
    text-align: center;
-   height: 800px;
-   margin-bottom: 100px;
+   max-width: 1000px;
+   margin: 3rem auto;
+
 }
 
-.w-header::before {
+.w-header-text {
    position: absolute;
+}
+
+.w-header-img {
+   mask-image: linear-gradient(to bottom, black 98%, transparent 100%);
+}
+
+/* .w-header {
+   position: relative;
    display: flex;
    content: '';
-   background-image: url('../../../wedding.webp');
+   background-image: url('../../../w-main-photo.jpeg');
    background-repeat: no-repeat;
    background-position: center;
    width: 100%;
    height: 100%;
    z-index: -10;
    top: 150px;
-}
+} */
 
 .w-header h1 {
    font-size: 6rem;
    margin-bottom: 0.5rem;
+}
+
+.w-header h2 {
+   font-size: 4rem;
+   margin-bottom: 0.5rem;
+   font-family: 'AmadeusAP';
 }
 
 .w-header p {

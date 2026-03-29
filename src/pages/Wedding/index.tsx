@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 import './Wedding.css';
 import { CalendarIcon, MapPinnedIcon, UserRound } from 'lucide-react';
+import { useSearchParams } from 'react-router';
+
+const decodePayload = (payload: string): { guestNames: string[] } => {
+   const decoder = new TextDecoder();
+   const stringOfBytes = atob(payload);
+   const bytes = stringOfBytes.split(',').map((char) => parseInt(char));
+   return JSON.parse(decoder.decode(new Uint8Array(bytes)));
+};
 
 const FAQ_DATA = [
    {
@@ -16,7 +24,16 @@ const FAQ_DATA = [
 ];
 
 export const WeddingPage = () => {
+   const [searchParams] = useSearchParams();
    const [faqData, setFaqData] = useState(FAQ_DATA);
+   const [guestNames, setGuesNames] = useState<string[]>([]);
+   const payload = searchParams.get('payload');
+
+   useEffect(() => {
+      const guestNames = payload ? decodePayload(payload).guestNames : [];
+      setGuesNames(guestNames);
+   }, [payload]);
+
    useEffect(() => {
       document.title = 'Я&А';
       const observer = new IntersectionObserver(
@@ -44,11 +61,34 @@ export const WeddingPage = () => {
       setFaqData(newData);
    };
 
+   const manyGuests = guestNames.length > 1;
+   const nameTemplate = manyGuests
+      ? guestNames.reduce((acc, value, index) => {
+           if (index == guestNames.length - 1) {
+              acc += `и ${value}`;
+           } else {
+              acc += `${value} `;
+           }
+
+           return acc;
+        }, '')
+      : guestNames[0];
+   const dearText = manyGuests ? 'Дорогие' : 'Дорогой';
+   const greetingText = `${dearText} ${nameTemplate}`;
+   const invitationText = `Приглашаем разделить с нами этот особенный день и украсить его своим присутствием!`;
+
    return (
       <div className="wedding-page">
-         <header className="fade-in w-header">
-            <h1 className="font-bold">Ярослав и Анастасия</h1>
-            <p>Какой-то текст</p>
+         <header className="fade-in w-header py-8">
+            <img src="../../../w-main-photo.jpeg" className="w-header-img" />
+            <div className="w-header-text">
+               <h1 className="font-bold">Ярослав & Анастасия</h1>
+               <div className="flex justify-center">
+                  <img className="w-36 mb-5" src="../../../envelope.png" />
+               </div>
+               <h2 className="font-semibold font-sans">{greetingText}</h2>
+               <p>{invitationText}</p>
+            </div>
          </header>
 
          <section className="event-details fade-in">
