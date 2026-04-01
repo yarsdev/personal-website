@@ -1,13 +1,20 @@
 import { useEffect, useState } from 'react';
 import './Wedding.css';
 import { CalendarIcon, MapPinnedIcon, UserRound } from 'lucide-react';
-import { useSearchParams } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
-const decodePayload = (payload: string): { guestNames: string[] } => {
-   const decoder = new TextDecoder();
-   const stringOfBytes = atob(payload);
-   const bytes = stringOfBytes.split(',').map((char) => parseInt(char));
-   return JSON.parse(decoder.decode(new Uint8Array(bytes)));
+const decodePayload = (
+   payload: string
+): { guestNames: string[]; secret: string } | null => {
+   try {
+      const decoder = new TextDecoder();
+      const stringOfBytes = atob(payload);
+      const bytes = stringOfBytes.split(',').map((char) => parseInt(char));
+      return JSON.parse(decoder.decode(new Uint8Array(bytes)));
+   } catch (error) {
+      console.error(error);
+      return null;
+   }
 };
 
 const FAQ_DATA = [
@@ -23,15 +30,43 @@ const FAQ_DATA = [
    },
 ];
 
+const SCHEDULE = [
+   {
+      title: 'Сбор гостей',
+      description:
+         '14:00 – Приходите чуть раньше, чтобы успеть познакомиться и настроиться на классный вечер',
+   },
+   {
+      title: 'Церемония',
+      description: '15:00 – Свадебная церемония в саду',
+   },
+   {
+      title: 'Банкет',
+      description: '17:00 – Ужин, тосты и празднование',
+   },
+   {
+      title: 'Афтепати',
+      description: '21:00 – Музыка, танцы и коктейли',
+   },
+];
+
 export const WeddingPage = () => {
+   const navigate = useNavigate();
    const [searchParams] = useSearchParams();
    const [faqData, setFaqData] = useState(FAQ_DATA);
    const [guestNames, setGuesNames] = useState<string[]>([]);
    const payload = searchParams.get('payload');
 
    useEffect(() => {
-      const guestNames = payload ? decodePayload(payload).guestNames : [];
-      setGuesNames(guestNames);
+      const data = decodePayload(payload ?? '');
+
+      if (data?.guestNames) {
+         setGuesNames(data.guestNames);
+      }
+
+      if (data?.secret != '250926') {
+         navigate('/not-found');
+      }
    }, [payload]);
 
    useEffect(() => {
@@ -79,47 +114,42 @@ export const WeddingPage = () => {
 
    return (
       <div className="wedding-page">
-         <header className="fade-in w-header py-8">
-            <img src="../../../w-main-photo.jpeg" className="w-header-img" />
-            <div className="w-header-text">
-               <h1 className="font-bold">Ярослав & Анастасия</h1>
+         <header className="fade-in w-header py-8 flex-col sm:my-12 sm:mx-auto m-0 sm:justify-start justify-center">
+            <img
+               src="../../../w-main-photo.jpeg"
+               className="w-header-img opacity-40 sm:opacity-100 relative"
+            />
+            <div className="absolute">
+               <h1 className="font-bold sm:text-8xl text-5xl mb-2">
+                  Ярослав & Анастасия
+               </h1>
                <div className="flex justify-center">
                   <img className="w-36 mb-5" src="../../../envelope.png" />
                </div>
-               <h2 className="font-semibold font-sans">{greetingText}</h2>
-               <p>{invitationText}</p>
+               <h2 className="font-semibold font-sans sm:text-6xl text-4xl">
+                  {greetingText}
+               </h2>
+               <p className="sm:text-6xl text-2xl">{invitationText}</p>
             </div>
          </header>
 
          <section className="event-details fade-in">
             <div className="flex justify-center mb-6">
                <img className="h-15 w-25" src="../../../decor.svg" alt="" />
-               <h2>Детали мероприятия</h2>
+               <h2 className="text-center">Детали мероприятия</h2>
                <img
                   className="-scale-x-100 h-15 w-25"
                   src="../../../decor.svg"
                   alt=""
                />
             </div>
-            <div className="card hidden">
-               <p>
-                  <strong>Дата:</strong> 25 сентября 2026
-               </p>
-               <p>
-                  <strong>Время:</strong> 15:00
-               </p>
-               <p>
-                  <strong>Место:</strong> Шатер Зимний сад, г. Пенза, ул.
-                  Рахманинова, 3
-               </p>
-            </div>
 
             <div className="card">
-               <div className="grid grid-cols-2 gap-8">
+               <div className="sm:grid grid-cols-2 gap-8 flex flex-col">
                   <div className="col-span">
                      <div className="flex">
                         <CalendarIcon className="mr-2" />
-                        <h3 className="text-header-details text-xl mb-2 font-bold">
+                        <h3 className="text-header-details sm:text-xl text-lg mb-2 font-bold">
                            Когда и где
                         </h3>
                      </div>
@@ -160,10 +190,14 @@ export const WeddingPage = () => {
                            </h3>
                         </div>
 
-                        <p>
-                           Парковка рядом с главным входом • такси подъезжает
-                           прямо к воротам
-                        </p>
+                        <div>
+                           Будем рады видеть вас в праздничных образах.
+                           <h3>Дамы – вечерние платья.</h3>
+                           <h3>
+                              Джентльмены – классические образы: костюм или
+                              рубашка с брюками.
+                           </h3>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -173,18 +207,14 @@ export const WeddingPage = () => {
          <section className="fade-in">
             <h2>Расписание и таймлайн</h2>
             <div className="timeline">
-               <div className="timeline-item">
-                  <h4>Церемония</h4>
-                  <p>15:00 – Свадебная церемония в саду</p>
-               </div>
-               <div className="timeline-item">
-                  <h4>Банкет</h4>
-                  <p>17:00 – Ужин, тосты и празднование</p>
-               </div>
-               <div className="timeline-item">
-                  <h4>Афтепати</h4>
-                  <p>21:00 – Музыка, танцы и коктейли</p>
-               </div>
+               {SCHEDULE.map(({ title, description }, index) => {
+                  return (
+                     <div key={index} className="timeline-item">
+                        <h4 className="font-semibold text-xl">{title}</h4>
+                        <p>{description}</p>
+                     </div>
+                  );
+               })}
             </div>
          </section>
 
@@ -221,7 +251,7 @@ export const WeddingPage = () => {
          </section>
 
          <footer className="text-center">
-            <p>Будем рады разделить этот день с вами 💚</p>
+            <p className="p-6">Будем рады разделить этот день с вами 💛💛💛</p>
          </footer>
       </div>
    );
