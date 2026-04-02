@@ -1,5 +1,6 @@
 {
   "name": "personal-website",
+  "homepage": "https://yarsdev.github.io/personal-website/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,13 +8,15 @@
     "dev": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",
     "@tailwindcss/vite": "^4.1.14",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "gh-pages": "^6.3.0",
     "i18next": "^25.8.10",
     "lucide-react": "^0.545.0",
     "react": "^19.1.1",
