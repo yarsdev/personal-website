@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { HashRouter, Route, Routes } from 'react-router';
 import { WeddingPage } from './pages/Wedding';
 import MainLayout from './lib/layouts/MainLayout';
 import NotFoundPage from './pages/NotFound';
@@ -7,7 +7,7 @@ import NotFoundPage from './pages/NotFound';
 function App() {
    return (
       <>
-         <BrowserRouter basename="personal-website">
+         <HashRouter>
             <Routes>
                <Route path="/">
                   <Route index element={<MainLayout />} />
@@ -15,9 +15,9 @@ function App() {
                <Route path="features">
                   <Route path="wedding" element={<WeddingPage />} />
                </Route>
-               <Route path="*" element={<NotFoundPage />}></Route>
+               <Route path="/*" element={<NotFoundPage />}></Route>
             </Routes>
-         </BrowserRouter>
+         </HashRouter>
       </>
    );
 }
