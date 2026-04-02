@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import './Wedding.css';
 import { CalendarIcon, MapPinnedIcon, UserRound } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router';
+import mainPhoto from '/w-main-photo.jpeg';
+import envelope from '/envelope.png';
+import decor from '/decor.svg';
 
 const decodePayload = (
    payload: string
@@ -116,7 +119,7 @@ export const WeddingPage = () => {
       <div className="wedding-page">
          <header className="fade-in w-header py-8 flex-col sm:my-12 sm:mx-auto m-0 sm:justify-start justify-center">
             <img
-               src="../../../w-main-photo.jpeg"
+               src={mainPhoto}
                className="w-header-img opacity-40 sm:opacity-100 relative"
             />
             <div className="absolute">
@@ -124,7 +127,7 @@ export const WeddingPage = () => {
                   Ярослав & Анастасия
                </h1>
                <div className="flex justify-center">
-                  <img className="w-36 mb-5" src="../../../envelope.png" />
+                  <img className="w-36 mb-5" src={envelope} />
                </div>
                <h2 className="font-semibold font-sans sm:text-6xl text-4xl">
                   {greetingText}
@@ -135,13 +138,9 @@ export const WeddingPage = () => {
 
          <section className="event-details fade-in">
             <div className="flex justify-center mb-6">
-               <img className="h-15 w-25" src="../../../decor.svg" alt="" />
+               <img className="h-15 w-25" src={decor} alt="" />
                <h2 className="text-center">Детали мероприятия</h2>
-               <img
-                  className="-scale-x-100 h-15 w-25"
-                  src="../../../decor.svg"
-                  alt=""
-               />
+               <img className="-scale-x-100 h-15 w-25" src={decor} />
             </div>
 
             <div className="card">

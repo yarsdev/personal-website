@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import photo from '/photo.webp';
 
 export const Home = () => {
    const { t } = useTranslation();
@@ -11,7 +12,7 @@ export const Home = () => {
                <p className="mt-6">{t('intro')}</p>
             </div>
             <div className="basis-1/2 flex items-end">
-               <img className="h-auto w-max" src="./photo.webp" alt="" />
+               <img className="h-auto w-max" src={photo} alt="" />
             </div>
             <div className="basis-1/4 p-9 flex-wrap flex gap-1.5 h-max">
                <div className="rounded-2xl border border-border p-2 w-max h-max">
