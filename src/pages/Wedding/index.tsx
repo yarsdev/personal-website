@@ -126,13 +126,16 @@ export const WeddingPage = () => {
                <h1 className="font-bold sm:text-8xl text-5xl mb-2">
                   Ярослав & Анастасия
                </h1>
+               <div className="border-b-2 border-[#b89b6a] my-4" />
                <div className="flex justify-center">
                   <img className="w-36 mb-5" src={envelope} />
                </div>
-               <h2 className="font-semibold font-sans sm:text-6xl text-4xl">
+               <h2 className="invitation-text uppercase font-semibold sm:text-6xl text-4xl">
                   {greetingText}
                </h2>
-               <p className="sm:text-6xl text-2xl">{invitationText}</p>
+               <p className="invitation-text sm:text-4xl text-2xl">
+                  {invitationText}
+               </p>
             </div>
          </header>
 
